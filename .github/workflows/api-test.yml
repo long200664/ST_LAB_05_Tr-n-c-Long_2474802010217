@@ -1,0 +1,27 @@
+name: API Testing
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  newman-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Collection
+        run: |
+          newman run RestfulBooker_API_Collection.postman_collection.json \
+          -e RestfulBooker_Env.postman_environment.json
